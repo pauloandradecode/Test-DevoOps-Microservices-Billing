@@ -101,7 +101,12 @@
             <version>5.2.9.RELEASE</version>
             <scope>test</scope>
             <type>jar</type>
-        </dependency>         
+        </dependency>
+        <dependency>
+            <groupId>com.digitalthinking</groupId>
+            <artifactId>common-library</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
+        </dependency>    
     </dependencies>
     <build>
         <plugins>
