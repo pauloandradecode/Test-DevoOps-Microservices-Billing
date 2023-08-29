@@ -21,4 +21,4 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
     mavenAuthenticateFeed: true
-    options: '-X -P azure_artifacts
+    options: '-X -P azure_artifacts'
