@@ -4,7 +4,7 @@
 
 ### Integrar Azure DevOps Artifacs
 
-1.- Agregar la dependencia en el pom.xml
+1.- Agregar la dependencia del artefacto que desarrollamos en el proyecto "common" en el archivo pom.xml como se muestra a continuacion.-
 
 ```xml
 <dependency>
@@ -14,7 +14,7 @@
 </dependency>
 ```
 
-2.- Configuramos el servidor de artefactos en el pom.xml
+2.- Configuramos el servidor de artefactos en el archivo pom.xml.-
 
 ```xml
 <repository>
@@ -29,7 +29,7 @@
 </repository>
 ```
 
-3.- Configuramos el servidor de artefactos en el settings.xml
+3.- Configuramos el servidor de artefactos en el settings.xml, este archivo se encuentra en archivo ~/.m2.-
 
 ```xml
 <server>
@@ -38,6 +38,22 @@
     <password>[PERSONAL_ACCESS_TOKEN]</password>
 </server>
 ```
+
+3.1.- Configuracion en codespaces (github) para configurar el archivo settings.xml y ~/.m2.-
+
+Para ver el path de instalacion de maven corremos el siguiente comando.-
+
+```
+echo $MAVEN_HOME
+```
+
+Para poder trabajar con el archivo settingd.xml, lo copiamos utilizando el siguiente comando.-
+
+```
+cp $MAVEN_HOME/conf/settings.xml ~/.m2
+```
+
+Listo ya podemos empezar a configurar el archivo para lograr la conexion.
 
 4.- Reconfiguramos el proyecto para agregar el artefacto.-
 
