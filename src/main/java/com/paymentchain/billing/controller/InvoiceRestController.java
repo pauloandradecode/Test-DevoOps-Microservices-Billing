@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.Optional;
+import com.digitalthinking.common.Person;
 
 /**
  *
@@ -92,5 +93,17 @@ public class InvoiceRestController {
                   billingRepository.delete(get);  
         }
         return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/person/{id}")
+    public Person getPerson(@PathVariable String id) {
+        Person per = new Person(); 
+
+        per.setId(8);
+        per.setNames("Paulo");
+        per.setSurname("Andrade");
+        per.setDocumentNumber("12345678");
+        
+        return per;
     }
 }
