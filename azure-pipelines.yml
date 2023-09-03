@@ -28,7 +28,7 @@ stages:
     - task: MavenAuthenticate@0
       displayName: Maven Authenticate Artifacts
       inputs:
-      artifactsFeeds: 'Common_Artifac'
+        artifactsFeeds: 'Common_Artifac'
 
     - task: Maven@3
       displayName: 'Compile Package'
