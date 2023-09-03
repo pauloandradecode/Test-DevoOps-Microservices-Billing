@@ -47,7 +47,7 @@ stages:
 
     - task: CopyFiles@1
       # Nombre para reconocerlo en el log
-      displayName: 'Copy JAR Artifact'
+      displayName: 'Copy JAR Artifact to pipeline artifact'
       # Condición para que se ejecute (solo si la tarea anterior fue exitosa)
       condition: succeeded()
       inputs:
@@ -56,9 +56,28 @@ stages:
         # Buscamos el archivo .jar
         Contents: '**/*.jar'
         # Directorio donde vamos a copiar el archivo .jar
-        TargetFolder: '$(Build.ArtifactStagingDirectory)/(Build.BuildConfiguration)'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)/$(Build.BuildConfiguration)'
         # Limpiamos el directorio antes de copiar
         CleanTargetFolder: true
+
+    - task: ArchiveFiles@2
+      # Nombre para reconocerlo en el log
+      displayName: 'Archive JAR Artifact'
+      # Condición para que se ejecute (solo si la tarea anterior fue exitosa)
+      condition: succeeded()
+      inputs:
+        # Directorio donde vamos encontrar los archivos a comprimir
+        rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/target/'
+        # Nombre del archivo comprimido
+        includeRootFolder: true
+        # Nombre del archivo comprimido
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildConfiguration)/$(Build.BuildId).zip'
+        # Formato del archivo comprimido
+        archiveType: 'zip'
+        # reemplazamos el archivo si ya existe
+        replaceExistingArchive: true
+        # Limpiamos el directorio antes de comprimir
+        cleanDestinationFolder: true
 
     - task: PublishBuildArtifacts@1
       # Nombre para reconocerlo en el log
