@@ -67,7 +67,7 @@ stages:
       condition: succeeded()
       inputs:
         # Directorio donde vamos encontrar los archivos a comprimir
-        rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/target/'
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/target/'
         # Nombre del archivo comprimido
         includeRootFolder: true
         # Nombre del archivo comprimido
