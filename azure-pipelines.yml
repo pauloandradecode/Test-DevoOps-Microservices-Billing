@@ -19,6 +19,11 @@ stages:
       vmImage: ubuntu-latest
 
     steps:
+    - task: clean
+      displayName: 'Clean'
+      inputs:
+        cleanBuild: true
+
     - task: Maven@3
       displayName: 'Compile Package'
       inputs:
