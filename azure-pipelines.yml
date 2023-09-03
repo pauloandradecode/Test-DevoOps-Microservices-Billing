@@ -26,7 +26,7 @@ stages:
       inputs:
         secureFile: 'maven-azuredevops-settings.xml'
     - task: MavenAuthenticate@0
-      displayName: Maven Authenticate Artifacts
+      displayName: 'Maven Authenticate Artifacts'
       inputs:
         artifactsFeeds: 'Common_Artifac'
 
