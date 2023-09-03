@@ -6,19 +6,55 @@
 trigger:
 - feature/*
 
+variables:
+  buildConfiguration: 'Release'
+  
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    mavenAuthenticateFeed: true
-    goals: 'package'
-    options: '-X -P azure_artifacts'
+- stage: Build
+  displayName: Build the application
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+
+    steps:
+    - task: Maven@3
+      inputs:
+        mavenPomFile: 'pom.xml'
+        mavenOptions: '-Xmx3072m'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '1.8'
+        jdkArchitectureOption: 'x64'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        mavenAuthenticateFeed: true
+        goals: 'package'
+        options: '-X -P azure_artifacts'
+
+    - task: CopyFiles@1
+      # Nombre para reconocerlo en el log
+      displayName: 'Copy JAR Artifact'
+      # Condición para que se ejecute (solo si la tarea anterior fue exitosa)
+      condition: succeeded()
+      inputs:
+        # Directorio donde vamos encontrar los archivos a copiar (el compilado)
+        SourceFolder: '$(System.DefaultWorkingDirectory)/target/'
+        # Buscamos el archivo .jar
+        Contents: '**/*.jar'
+        # Directorio donde vamos a copiar el archivo .jar
+        TargetFolder: '$(Build.ArtifactStagingDirectory)/(Build.BuildConfiguration)'
+        # Limpiamos el directorio antes de copiar
+        CleanTargetFolder: true
+
+    - task: PublishBuildArtifacts@1
+      # Nombre para reconocerlo en el log
+      displayName: 'Publish Artifact'
+      # Condición para que se ejecute (solo si la tarea anterior fue exitosa)
+      condition: succeeded()
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
