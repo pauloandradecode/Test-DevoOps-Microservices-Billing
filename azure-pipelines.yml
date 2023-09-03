@@ -24,6 +24,7 @@ stages:
       name: mvnSettings
       displayName: 'Download Maven settings'
       inputs:
+        # Hay que agregar este archivo como seguro desde devops
         secureFile: 'maven-azuredevops-settings.xml'
     - task: MavenAuthenticate@0
       displayName: 'Maven Authenticate Artifacts'
