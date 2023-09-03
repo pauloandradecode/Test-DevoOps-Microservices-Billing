@@ -71,7 +71,7 @@ stages:
         # Nombre del archivo comprimido
         includeRootFolder: true
         # Nombre del archivo comprimido
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildConfiguration)/$(Build.BuildId).zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
         # Formato del archivo comprimido
         archiveType: 'zip'
         # reemplazamos el archivo si ya existe
