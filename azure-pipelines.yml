@@ -43,7 +43,7 @@ stages:
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
         mavenAuthenticateFeed: true
         goals: 'package'
-        options: '-X -P azure_artifacts'
+        options: '-X -P azure_artifacts -s $(mvnSettings.secureFilePath)'
 
     - task: CopyFiles@1
       # Nombre para reconocerlo en el log
