@@ -70,3 +70,30 @@ Cambié el contenido del archivo para que sea parecido al siguiente.-
 ```
 JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home
 ```
+
+### Integrar un artefacto desde otro repositorio
+
+Adicional de seguir los pasos en la seccción "Integrar Azure DevOps Artifacs", debemos agregar el archivo settings.xml a los archivos seguros de nuestro pipeline desde Azure DevOps, como se muestra en el siguiente enlace.-
+
+https://learn.microsoft.com/en-us/azure/devops/pipelines/library/secure-files?view=azure-devops
+
+Adiocional, se debe agregar las siguientes tareas en nuestro pipeline antes de la tarea de compilación.-
+
+```
+steps:
+
+- task: DownloadSecureFile@1
+  name: mvnSettings
+  displayName: 'Download Maven settings'
+  inputs:
+    # Hay que agregar este archivo como seguro desde devops
+    secureFile: 'maven-azuredevops-settings.xml'
+- task: MavenAuthenticate@0
+  displayName: 'Maven Authenticate Artifacts'
+  inputs:
+    artifactsFeeds: 'Common_Artifac'
+
+- task: Maven@3
+  displayName: 'Compile Package'
+  ........
+```
