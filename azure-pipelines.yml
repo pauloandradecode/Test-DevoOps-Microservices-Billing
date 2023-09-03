@@ -19,10 +19,16 @@ stages:
       vmImage: ubuntu-latest
 
     steps:
-    - task: clean
-      displayName: 'Clean'
+
+    - task: DownloadSecureFile@1
+      name: mvnSettings
+      displayName: 'Download Maven settings'
       inputs:
-        cleanBuild: true
+        secureFile: 'maven-azuredevops-settings.xml'
+    - task: MavenAuthenticate@0
+      displayName: Maven Authenticate Artifacts
+      inputs:
+      artifactsFeeds: 'Common_Artifac'
 
     - task: Maven@3
       displayName: 'Compile Package'
